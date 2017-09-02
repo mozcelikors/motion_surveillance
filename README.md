@@ -4,7 +4,6 @@ motion_surveillance: Raspberry Pi Surveillance System for your Home. Basic scrip
 ##### How to configure and install
 ```
 sudo apt-get install motion tmpreaper
-
 ```
 Copy motion to `/etc/default/motion`
 
@@ -21,5 +20,8 @@ sudo service motion start
 To start the motion using script,
 
 ```
+sudo chmod +x start_motion_surveillance.sh
 sudo ./start_motion_surveillance.sh
 ```
+
+The stream and pictures are located at `/var/lib/motion` by default. Modify the scripts to change it if you like.
