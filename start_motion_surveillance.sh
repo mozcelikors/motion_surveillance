@@ -1,12 +1,9 @@
 #!/bin/bash
 
 # motion_surveillance
-# @description Motion server attachment for data space handling
 # @author Mustafa Ozcelikors
 # @contact mozcelikors@gmail.com
 #
-
-#TODO: Add opts from command line
 
 echo $(date -u) "##### Starting Motion Server"
 sudo motion &>/dev/null  & #Discard the stdout to /dev/null
@@ -24,5 +21,5 @@ while true; do
 		done
 		echo $(date -u)" ##### Complete"
 	fi
-	sleep 600 #Every 10 minutes, check 
+	sleep 60 #Every minute, check 
 done
