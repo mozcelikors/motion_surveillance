@@ -10,7 +10,7 @@ sudo motion &>/dev/null  & #Discard the stdout to /dev/null
 
 while true; do
 	SPACE_USED=$(sudo df --output=pcent / | sed 's/[^0-9]*//g' | tr -d '[:space:]') #Using sed to get the number, and trim whitespaces of df command
-	sudo tmpreaper 2d /var/lib/motion/ # Delete data older than two days
+	sudo tmpreaper 5d /var/lib/motion/ # Delete data older than five days
 	echo $(date -u)" ##### Motion Server, Tmpreaper - working.."
 	echo $(date -u)" ##### Space used on the machine $SPACE_USED%"
 	if [ "$SPACE_USED" -ge "95" ]; then
