@@ -78,7 +78,7 @@ while true; do
   		RPI_CPU_TEMP=$(/opt/vc/bin/vcgencmd measure_temp | sed -r 's/.*_([0-9]*)\..*/\1/g' | tr -d '[:space:]') 
 	fi
 	
-	# Delete data older than five days
+	# Delete data older than DAYS_TO_KEEP days
 	sudo tmpreaper $DAYS_TO_KEEP /var/lib/motion/ 
 	
 	# Print information
