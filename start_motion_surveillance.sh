@@ -29,7 +29,7 @@ helpwindow ()
 }
 
 # Check if help window is called
-if [ "$1" == "" ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 	helpwindow
 	exit 0
 fi
@@ -49,7 +49,7 @@ do
 		;;
 		*)
 			#Unknown
-			helpwindow
+			#helpwindow # We dont show helpwindow for no arguments yet
 		;;
 	esac
 	shift
@@ -74,7 +74,7 @@ while true; do
 	
 	# Extract raspberry pi cpu temperature (float number) with sed
 	# Check if we are able to measure CPU temperature
-	if ! type "/opt/vc/bin/vcgencmd measure_temp" > /dev/null; then
+	if [ -f "/opt/vc/bin/vcgencmd" ]; then
   		RPI_CPU_TEMP=$(/opt/vc/bin/vcgencmd measure_temp | sed -r 's/.*_([0-9]*)\..*/\1/g' | tr -d '[:space:]') 
 	fi
 	
@@ -92,9 +92,7 @@ while true; do
 		cd /var/lib/motion
 		
 		# Delete last 100 files to clear up some disk space
-		for i in `seq 1 100`; do
-			sudo rm "$(ls -t | tail -1)"
-		done
+		sudo ls -tp | grep -v '/$' | tail -100 | xargs -d '\n' -r rm --
 		echo $(date -u)" ##### Complete"
 	fi
 	sleep 60 #Every minute, check 
