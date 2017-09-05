@@ -63,7 +63,7 @@ if [[ -z ${DAYS_TO_KEEP+x} ]]; then # If non-defined, use default value
 	DAYS_TO_KEEP=5d
 fi
 
-# Start the motion service
+# Start the motion service in another process and discard its output
 echo $(date -u) "##### Starting Motion Service"
 sudo motion &>/dev/null  & # Discard the stdout to /dev/null
 
