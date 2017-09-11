@@ -88,7 +88,7 @@ while true; do
 	
 	# Check for disk space
 	if [ "$SPACE_USED" -ge "$MIN_SPACE_LEFT" ]; then
-		echo $(date -u)" ##### System is running out of space, deleting last 100 files"
+		echo $(date -u)" ##### System is running out of space, deleting last 500 files"
 		cd /var/lib/motion
 		
 		# Delete last 500 files to clear up some disk space
