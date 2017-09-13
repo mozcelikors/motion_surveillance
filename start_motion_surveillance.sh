@@ -55,6 +55,34 @@ do
 	shift
 done
 
+# Check for the package motion, if it's not installed give a warning UI and then install
+if [ $(dpkg-query -W -f='${Status}' tmpreaper 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+       
+       whiptail --title "Warning!" \
+		--msgbox "\n tmpreaper should be installed to run this application.\n Installing now!" 13 78
+       
+       sudo apt-get install tmpreaper
+fi
+
+# Check for the package motion, if it's not installed give a warning UI and then install
+if [ $(dpkg-query -W -f='${Status}' motion 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+       
+       whiptail --title "Warning!" \
+		--msgbox "\n motion should be installed to run this application.\n Installing now!" 13 78
+       
+       sudo apt-get install motion
+fi
+
+#Just for fun, create a dialog (terminal UI) if no arguments provided
+if [ $# -eq 0 ]; then
+    whiptail --title "Motion Surveillance Service" \
+	     --msgbox "\n No arguments provided to the software.\n Continuing with the following settings: \n\n Days of Data to Keep: 5\n Minimum Disk Space to Look for: 95%\n" 13 78
+
+    echo "$continue_flag"
+    #exit 1
+
+fi
+
 # Check for the command line args
 if [[ -z ${MIN_SPACE_LEFT+x} ]]; then # If non-defined, use default value
 	MIN_SPACE_LEFT=95
@@ -88,12 +116,12 @@ while true; do
 	
 	# Check for disk space
 	if [ "$SPACE_USED" -ge "$MIN_SPACE_LEFT" ]; then
-		echo $(date -u)" ##### System is running out of space, deleting last 100 files"
-		cd /var/lib/motion
+		echo $(date -u)" ##### System is running out of space, deleting last 50 files"
 		
-		# Delete last 100 files to clear up some disk space
-		sudo ls -tp | grep -v '/$' | tail -100 | xargs -d '\n' -r rm --
+		# Delete last 50 files to clear up some disk space
+		cd /var/lib/motion && sudo ls -tp | grep -v '/$' | tail -50 | xargs -d '\n' -r rm --
 		echo $(date -u)" ##### Complete"
 	fi
-	sleep 10 #Every 10 second, check 
+	sleep 5 #Every 5 second, check 
 done
+
