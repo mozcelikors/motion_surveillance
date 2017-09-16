@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# If you are using ssh and want to close SSH,
+# Run the script in background with a log file as:
+# sudo ./start_motion_surveillance.sh > log.txt &
+
 # Help function
 helpwindow ()
 {
